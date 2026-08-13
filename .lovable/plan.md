@@ -1,41 +1,54 @@
-# Airline Cargo Management System — UI Design & Export Plan
+# ULD Management System — UI Design Phase
 
-## Overview
-Build a complete, high-fidelity UI for an airline cargo management tool, then export the screens as a shareable asset pack. The visual direction is a corporate sidebar dashboard: deep navy (Navy Trust palette), Sora headings, Manrope body, clean data-dense panels.
+Airline ULD (Unit Load Device) tracking system. AKE = baggage containers, PMC = cargo pallets. Dhaka is headquarters; all other airports are outstations.
 
-## Design Decisions
-- **Palette**: Navy Trust — `#0f1b3d` (brand navy), `#1e3a5f` (secondary), `#3b6fa0` (accent), `#e8edf3` (surface). Tokens map to `--background`, `--foreground`, `--primary`, `--secondary`, `--accent`, `--muted`, `--card`, `--border`.
-- **Typography**: Sora for headings and numbers; Manrope for body, labels, and table text.
-- **Layout**: Persistent sidebar dashboard with a top bar, main content area, and a summary/stat cards on the home screen. Tables are the primary data surface.
-- **Components**: sidebar navigation, top header, KPI cards, data tables, filters, status badges, form inputs, modal shells, toast/notification area.
-- **No dark-mode toggle**: single light theme focused on corporate readability.
+This phase builds **every screen with realistic demo data** so you can review and approve the design and workflows. No backend yet — that comes after your approval.
 
-## Screens to Design & Export
-1. **Login** — centered corporate login with brand navy, email/password, airline logo mark.
-2. **Dashboard / Overview** — KPI row (active shipments, flights today, tonnage, revenue), recent shipments table, quick actions, alert panel.
-3. **Shipments** — searchable/filterable shipments table with status badges, AWB number, origin/destination, weight, flight, and customer.
-4. **Shipment Detail** — read-only summary card, cargo manifest, tracking timeline, document list, action buttons.
-5. **Flight Schedule** — flight grid with route, aircraft, departure/arrival, available capacity, cut-off times.
-6. **Warehouse / Inventory** — storage positions, ULD/pallet inventory, inbound/outbound activity.
-7. **Customers** — customer directory with contact, volume tier, credit status, recent shipments.
-8. **Reports / Analytics** — charts and summary tables (tonnage, revenue, top routes, delayed shipments).
-9. **Settings** — account, users/roles, notifications, integrations.
+## Design Direction
+- **Palette**: Navy Trust — `#0f1b3d` navy, `#1e3a5f` secondary, `#3b6fa0` accent, `#e8edf3` surface
+- **Typography**: Sora headings, Manrope body
+- **Layout**: Persistent sidebar dashboard, corporate density, data tables as the primary surface
+- Condition colors: Active (green), Under Repair (amber), Lite Damage (orange), Damage (red)
 
-## Export Deliverables
-- PNG screenshots of each screen at 1440x900 desktop viewport.
-- A single PDF deck containing all screens in order.
-- All files saved to `/mnt/documents/cargo-ui-export/`.
+## Core Model
+Every AKE/PMC is an individual numbered unit with a current **station** and current **condition**. Send and Receive are two halves of one Shipment record — the send opens it (In Transit), the receive closes it. Comparing the two halves is what detects mismatches (10 sent, 9 received) and condition downgrades. That comparison drives the email trigger.
 
-## Implementation Steps
-1. Set up design tokens in `src/styles.css` (Navy Trust palette, Sora + Manrope font imports).
-2. Build the shared dashboard shell: sidebar, top bar, page header, and content wrapper.
-3. Build reusable components: KPI cards, data tables, filters, status badges, form inputs, buttons.
-4. Implement the route tree and screens listed above in `src/routes/`.
-5. Seed representative cargo data so every screen looks realistic in screenshots.
-6. Export each screen via Playwright to PNG, then assemble into a PDF.
-7. Verify all exported screens for clipping, missing data, or layout issues.
+## Screens
 
-## Scope Exclusions
-- No real backend or database integration (use static/demo data for the export).
-- No authentication logic; login screen is a visual shell.
-- No interactive chart library if it complicates export; use simple stat cards and bar visuals where needed.
+**Login** — corporate branded sign-in.
+
+**Dashboard** — bar chart of total AKE vs PMC units, airport filter dropdown, HQ vs Outstation split cards, and a station table showing AKE stock, PMC stock, total capacity, and stock status per station.
+
+**Create** — form to add an AKE/PMC by number with condition. Table of created units with inline condition change (Active / Under Repair / Lite Damage / Damage). Excel import panel with column mapping preview. Send-mail action.
+
+**Send** — from-station auto-filled from the signed-in user's profile. Multi-select list of available units at that station, destination station dropdown, condition per unit, remarks field. Confirmation summary showing what will be sent and who gets notified.
+
+**Receive** — inbound shipments list. Detail view to log received units, condition on arrival, remarks, and document/photo attachments as evidence. Mismatch banner appears automatically when received counts or conditions differ from sent. Send-email action opens the email composer.
+
+**Email Composer** — preset template with sender's email, unit details, shipment info, and attachments prefilled. Used for mismatch and damage reporting.
+
+**AKE & PMC Registry** — master list of all units with number, type, current station, condition, and last movement. Unit detail page shows the full journey timeline: every station-to-station move with condition at each step.
+
+**Reports** — separate AKE Report and PMC Report tabs, with date range and station filters, summary totals, and download action.
+
+**Stations** — station master data (code, name, city, HQ/Outstation, capacity, contact email). This list feeds every station dropdown in the system.
+
+**User Management** — user list with details, assigned stations, and role. Admin can edit users and reset passwords.
+
+**Roles & Permissions** — role list plus a permission matrix (view / create / edit / delete per module) so the admin controls access.
+
+## Rules Reflected in the UI
+- Station scoping: users only see stations assigned to their profile — dropdowns and lists are filtered accordingly.
+- Receiver notification: on send, the receiving station's personnel are notified with the unit count and type (CPM-style message).
+- Evidence: attachments available at receive for documenting damage or discrepancy.
+- Every state change is recorded and shown in the unit journey.
+
+## Technical Notes
+- Design tokens in `src/styles.css`; Sora + Manrope loaded via the root route.
+- Shared dashboard shell (sidebar + top bar + page header) wraps all authenticated screens.
+- Reusable components: KPI card, data table with filters, condition badge, station selector, unit multi-select, timeline, file dropzone, permission matrix.
+- Demo data in a typed fixtures module — swapped for real queries in the backend phase.
+- Charts via a lightweight chart component using design tokens.
+
+## Not in This Phase
+- Database, authentication, real email sending, Excel parsing, file storage. All screens use demo data. Backend wiring follows your design approval.
