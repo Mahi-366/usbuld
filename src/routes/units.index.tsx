@@ -15,7 +15,7 @@ import {
 } from "@/components/uld-ui";
 import { CONDITIONS, stations, units } from "@/lib/uld-data";
 
-export const Route = createFileRoute("/units")({
+export const Route = createFileRoute("/units/")({
   head: () => ({
     meta: [
       { title: "AKE & PMC Registry — ULD Control" },

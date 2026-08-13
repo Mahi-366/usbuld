@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ReceiveRouteImport } from './routes/receive'
 import { Route as SendRouteImport } from './routes/send'
+import { Route as UnitsIndexRouteImport } from './routes/units.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +31,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceiveRoute = ReceiveRouteImport.update({
+  id: '/receive',
+  path: '/receive',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SendRoute = SendRouteImport.update({
   id: '/send',
   path: '/send',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnitsIndexRoute = UnitsIndexRouteImport.update({
+  id: '/units/',
+  path: '/units/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +51,42 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
   '/send': typeof SendRoute
+  '/units/': typeof UnitsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
   '/send': typeof SendRoute
+  '/units': typeof UnitsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
   '/send': typeof SendRoute
+  '/units/': typeof UnitsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/login' | '/send'
+  fullPaths: '/' | '/create' | '/login' | '/receive' | '/send' | '/units/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/login' | '/send'
-  id: '__root__' | '/' | '/create' | '/login' | '/send'
+  to: '/' | '/create' | '/login' | '/receive' | '/send' | '/units'
+  id: '__root__' | '/' | '/create' | '/login' | '/receive' | '/send' | '/units/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoute: typeof CreateRoute
   LoginRoute: typeof LoginRoute
+  ReceiveRoute: typeof ReceiveRoute
   SendRoute: typeof SendRoute
+  UnitsIndexRoute: typeof UnitsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +112,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receive': {
+      id: '/receive'
+      path: '/receive'
+      fullPath: '/receive'
+      preLoaderRoute: typeof ReceiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/send': {
       id: '/send'
       path: '/send'
       fullPath: '/send'
       preLoaderRoute: typeof SendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/units/': {
+      id: '/units/'
+      path: '/units'
+      fullPath: '/units/'
+      preLoaderRoute: typeof UnitsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +140,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
   LoginRoute: LoginRoute,
+  ReceiveRoute: ReceiveRoute,
   SendRoute: SendRoute,
+  UnitsIndexRoute: UnitsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
