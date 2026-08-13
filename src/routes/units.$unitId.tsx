@@ -45,7 +45,7 @@ function UnitNotFound() {
 
 function UnitDetail() {
   const { unit } = Route.useLoaderData();
-  const legs = journeys.default!;
+  const legs = journeys["default"]!;
   const station = stationByCode(unit.stationCode);
 
   return (

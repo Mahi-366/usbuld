@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ReceiveRouteImport } from './routes/receive'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as SendRouteImport } from './routes/send'
 import { Route as UnitsIndexRouteImport } from './routes/units.index'
+import { Route as UnitsUnitIdRouteImport } from './routes/units.$unitId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,6 +38,11 @@ const ReceiveRoute = ReceiveRouteImport.update({
   path: '/receive',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SendRoute = SendRouteImport.update({
   id: '/send',
   path: '/send',
@@ -46,13 +53,20 @@ const UnitsIndexRoute = UnitsIndexRouteImport.update({
   path: '/units/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnitsUnitIdRoute = UnitsUnitIdRouteImport.update({
+  id: '/units/$unitId',
+  path: '/units/$unitId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
   '/send': typeof SendRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
   '/units/': typeof UnitsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -60,7 +74,9 @@ export interface FileRoutesByTo {
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
   '/send': typeof SendRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
   '/units': typeof UnitsIndexRoute
 }
 export interface FileRoutesById {
@@ -69,15 +85,42 @@ export interface FileRoutesById {
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
   '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
   '/send': typeof SendRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
   '/units/': typeof UnitsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/login' | '/receive' | '/send' | '/units/'
+  fullPaths:
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/send'
+    | '/units/$unitId'
+    | '/units/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/login' | '/receive' | '/send' | '/units'
-  id: '__root__' | '/' | '/create' | '/login' | '/receive' | '/send' | '/units/'
+  to:
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/send'
+    | '/units/$unitId'
+    | '/units'
+  id:
+    | '__root__'
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/send'
+    | '/units/$unitId'
+    | '/units/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -85,7 +128,9 @@ export interface RootRouteChildren {
   CreateRoute: typeof CreateRoute
   LoginRoute: typeof LoginRoute
   ReceiveRoute: typeof ReceiveRoute
+  ReportsRoute: typeof ReportsRoute
   SendRoute: typeof SendRoute
+  UnitsUnitIdRoute: typeof UnitsUnitIdRoute
   UnitsIndexRoute: typeof UnitsIndexRoute
 }
 
@@ -119,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReceiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/send': {
       id: '/send'
       path: '/send'
@@ -133,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnitsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/units/$unitId': {
+      id: '/units/$unitId'
+      path: '/units/$unitId'
+      fullPath: '/units/$unitId'
+      preLoaderRoute: typeof UnitsUnitIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -141,7 +200,9 @@ const rootRouteChildren: RootRouteChildren = {
   CreateRoute: CreateRoute,
   LoginRoute: LoginRoute,
   ReceiveRoute: ReceiveRoute,
+  ReportsRoute: ReportsRoute,
   SendRoute: SendRoute,
+  UnitsUnitIdRoute: UnitsUnitIdRoute,
   UnitsIndexRoute: UnitsIndexRoute,
 }
 export const routeTree = rootRouteImport
