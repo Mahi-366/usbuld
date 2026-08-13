@@ -4,7 +4,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
+
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -269,4 +269,3 @@ function Dashboard() {
   );
 }
 
-void Cell;
