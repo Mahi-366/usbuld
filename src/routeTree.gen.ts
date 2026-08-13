@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CreateRouteImport } from './routes/create'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ReceiveRouteImport } from './routes/receive'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as RolesRouteImport } from './routes/roles'
+import { Route as SendRouteImport } from './routes/send'
+import { Route as StationsRouteImport } from './routes/stations'
+import { Route as UsersRouteImport } from './routes/users'
+import { Route as UnitsIndexRouteImport } from './routes/units.index'
+import { Route as UnitsUnitIdRouteImport } from './routes/units.$unitId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiveRoute = ReceiveRouteImport.update({
+  id: '/receive',
+  path: '/receive',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RolesRoute = RolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SendRoute = SendRouteImport.update({
+  id: '/send',
+  path: '/send',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StationsRoute = StationsRouteImport.update({
+  id: '/stations',
+  path: '/stations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnitsIndexRoute = UnitsIndexRouteImport.update({
+  id: '/units/',
+  path: '/units/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnitsUnitIdRoute = UnitsUnitIdRouteImport.update({
+  id: '/units/$unitId',
+  path: '/units/$unitId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
+  '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/send': typeof SendRoute
+  '/stations': typeof StationsRoute
+  '/users': typeof UsersRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
+  '/units/': typeof UnitsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
+  '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/send': typeof SendRoute
+  '/stations': typeof StationsRoute
+  '/users': typeof UsersRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
+  '/units': typeof UnitsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/create': typeof CreateRoute
+  '/login': typeof LoginRoute
+  '/receive': typeof ReceiveRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/send': typeof SendRoute
+  '/stations': typeof StationsRoute
+  '/users': typeof UsersRoute
+  '/units/$unitId': typeof UnitsUnitIdRoute
+  '/units/': typeof UnitsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/roles'
+    | '/send'
+    | '/stations'
+    | '/users'
+    | '/units/$unitId'
+    | '/units/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/roles'
+    | '/send'
+    | '/stations'
+    | '/users'
+    | '/units/$unitId'
+    | '/units'
+  id:
+    | '__root__'
+    | '/'
+    | '/create'
+    | '/login'
+    | '/receive'
+    | '/reports'
+    | '/roles'
+    | '/send'
+    | '/stations'
+    | '/users'
+    | '/units/$unitId'
+    | '/units/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateRoute: typeof CreateRoute
+  LoginRoute: typeof LoginRoute
+  ReceiveRoute: typeof ReceiveRoute
+  ReportsRoute: typeof ReportsRoute
+  RolesRoute: typeof RolesRoute
+  SendRoute: typeof SendRoute
+  StationsRoute: typeof StationsRoute
+  UsersRoute: typeof UsersRoute
+  UnitsUnitIdRoute: typeof UnitsUnitIdRoute
+  UnitsIndexRoute: typeof UnitsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receive': {
+      id: '/receive'
+      path: '/receive'
+      fullPath: '/receive'
+      preLoaderRoute: typeof ReceiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roles': {
+      id: '/roles'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof RolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/send': {
+      id: '/send'
+      path: '/send'
+      fullPath: '/send'
+      preLoaderRoute: typeof SendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stations': {
+      id: '/stations'
+      path: '/stations'
+      fullPath: '/stations'
+      preLoaderRoute: typeof StationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/units/': {
+      id: '/units/'
+      path: '/units'
+      fullPath: '/units/'
+      preLoaderRoute: typeof UnitsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/units/$unitId': {
+      id: '/units/$unitId'
+      path: '/units/$unitId'
+      fullPath: '/units/$unitId'
+      preLoaderRoute: typeof UnitsUnitIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateRoute: CreateRoute,
+  LoginRoute: LoginRoute,
+  ReceiveRoute: ReceiveRoute,
+  ReportsRoute: ReportsRoute,
+  RolesRoute: RolesRoute,
+  SendRoute: SendRoute,
+  StationsRoute: StationsRoute,
+  UsersRoute: UsersRoute,
+  UnitsUnitIdRoute: UnitsUnitIdRoute,
+  UnitsIndexRoute: UnitsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
