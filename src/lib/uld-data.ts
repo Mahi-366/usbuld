@@ -511,3 +511,28 @@ export const roles: Role[] = [
 export const currentUser = users[0]!;
 
 export const currentStation = "DAC";
+
+export interface LoadPosition {
+  id: string;
+  code: string;
+  deck: "Main Deck" | "Lower Deck";
+  compartment: string;
+  aircraft: string;
+  unitTypes: UnitType[];
+  active: boolean;
+}
+
+export const loadPositions: LoadPosition[] = [
+  { id: "pos-1", code: "11L", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-2", code: "11R", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-3", code: "12P", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-4", code: "21P", deck: "Main Deck", compartment: "Mid", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-5", code: "31P", deck: "Main Deck", compartment: "Aft", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-6", code: "41L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-7", code: "41R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-8", code: "42L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-9", code: "51L", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-10", code: "52R", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE", "PMC"], active: true },
+  { id: "pos-11", code: "PR", deck: "Lower Deck", compartment: "Bulk", aircraft: "A330-300", unitTypes: ["AKE"], active: false },
+  { id: "pos-12", code: "PL", deck: "Lower Deck", compartment: "Bulk", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+];

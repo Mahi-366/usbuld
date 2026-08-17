@@ -19,6 +19,7 @@ import {
   currentStation,
   stationByCode,
   stations,
+  loadPositions,
   units,
   type Condition,
   type Unit,
@@ -96,6 +97,18 @@ function CreatePage() {
                     .map((s) => (
                       <option key={s.code} value={s.code}>
                         {s.code} — {s.city}
+                      </option>
+                    ))}
+                </select>
+              </Field>
+              <Field label="Select position" hint="Aircraft position where this unit is loaded.">
+                <select className={selectClass} defaultValue="">
+                  <option value="" disabled>Select load position</option>
+                  {loadPositions
+                    .filter((p) => p.active)
+                    .map((p) => (
+                      <option key={p.id} value={p.code}>
+                        {p.code} — {p.deck}, {p.compartment} ({p.aircraft})
                       </option>
                     ))}
                 </select>
