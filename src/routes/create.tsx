@@ -102,43 +102,6 @@ function CreatePage() {
             </div>
           </Panel>
 
-          <Panel title="Bulk import" description="Upload an Excel or CSV stock sheet.">
-            <div className="rounded-md border border-dashed border-input bg-surface/60 px-4 py-7 text-center">
-              <UploadCloud className="mx-auto size-7 text-muted-foreground" />
-              <p className="mt-2 text-[13px] font-medium">Drop your sheet here</p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
-                .xlsx or .csv, up to 5,000 rows
-              </p>
-              <button className={`${btn.outline} mt-3`}>
-                <FileSpreadsheet className="size-4" />
-                Browse file
-              </button>
-            </div>
-            <div className="mt-4">
-              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Column mapping
-              </p>
-              <ul className="space-y-1.5 text-[12px]">
-                {[
-                  ["Column A", "Unit number"],
-                  ["Column B", "Type (AKE / PMC)"],
-                  ["Column C", "Condition"],
-                  ["Column D", "Station code"],
-                ].map(([a, b]) => (
-                  <li
-                    key={a}
-                    className="flex items-center justify-between rounded border border-border bg-surface/50 px-2.5 py-1.5"
-                  >
-                    <span className="text-muted-foreground">{a}</span>
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <Check className="size-3.5 text-ok" />
-                      {b}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Panel>
         </div>
 
         <Panel
