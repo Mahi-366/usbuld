@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { FileSpreadsheet, Mail, Plus, UploadCloud, Check } from "lucide-react";
+import { Mail, Plus } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/app-shell";
 import {
   btn,
