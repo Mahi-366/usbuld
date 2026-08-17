@@ -7,6 +7,7 @@ import {
   Boxes,
   FileBarChart,
   Building2,
+  Grid3x3,
   Users,
   ShieldCheck,
   Plane,
@@ -31,6 +32,7 @@ const nav = [
   ]},
   { group: "Administration", items: [
     { to: "/stations", label: "Stations", icon: Building2 },
+    { to: "/positions", label: "Load Positions", icon: Grid3x3 },
     { to: "/users", label: "User Management", icon: Users },
     { to: "/roles", label: "Roles & Permissions", icon: ShieldCheck },
   ]},

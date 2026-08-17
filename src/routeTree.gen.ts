@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as ReceiveRouteImport } from './routes/receive'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as RolesRouteImport } from './routes/roles'
@@ -34,6 +35,11 @@ const CreateRoute = CreateRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PositionsRoute = PositionsRouteImport.update({
+  id: '/positions',
+  path: '/positions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReceiveRoute = ReceiveRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
   '/login': typeof LoginRoute
+  '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/create'
     | '/login'
+    | '/positions'
     | '/receive'
     | '/reports'
     | '/roles'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/'
     | '/create'
     | '/login'
+    | '/positions'
     | '/receive'
     | '/reports'
     | '/roles'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/create'
     | '/login'
+    | '/positions'
     | '/receive'
     | '/reports'
     | '/roles'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoute: typeof CreateRoute
   LoginRoute: typeof LoginRoute
+  PositionsRoute: typeof PositionsRoute
   ReceiveRoute: typeof ReceiveRoute
   ReportsRoute: typeof ReportsRoute
   RolesRoute: typeof RolesRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/positions': {
+      id: '/positions'
+      path: '/positions'
+      fullPath: '/positions'
+      preLoaderRoute: typeof PositionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/receive': {
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
   LoginRoute: LoginRoute,
+  PositionsRoute: PositionsRoute,
   ReceiveRoute: ReceiveRoute,
   ReportsRoute: ReportsRoute,
   RolesRoute: RolesRoute,
