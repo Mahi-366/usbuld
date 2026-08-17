@@ -80,13 +80,23 @@ function CreatePage() {
                   ))}
                 </select>
               </Field>
-              <Field label="Current station" hint="Defaults to your assigned station.">
-                <select className={selectClass} defaultValue={currentStation}>
-                  {stations.map((s) => (
-                    <option key={s.code} value={s.code}>
-                      {s.code} — {s.city}
-                    </option>
-                  ))}
+              <Field label="From station" hint="Locked to your assigned station.">
+                <input
+                  className={`${inputClass} bg-surface text-muted-foreground`}
+                  value={`${currentStation} — ${stationByCode(currentStation)?.city}`}
+                  readOnly
+                />
+              </Field>
+              <Field label="To station" hint="Select the receiving station.">
+                <select className={selectClass} defaultValue="">
+                  <option value="" disabled>Select destination station</option>
+                  {stations
+                    .filter((s) => s.code !== currentStation)
+                    .map((s) => (
+                      <option key={s.code} value={s.code}>
+                        {s.code} — {s.city}
+                      </option>
+                    ))}
                 </select>
               </Field>
               <Field label="Remarks">
