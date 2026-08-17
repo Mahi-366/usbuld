@@ -19,6 +19,8 @@ import { Route as RolesRouteImport } from './routes/roles'
 import { Route as SendRouteImport } from './routes/send'
 import { Route as StationsRouteImport } from './routes/stations'
 import { Route as UsersRouteImport } from './routes/users'
+import { Route as ReportsIndexRouteImport } from './routes/reports.index'
+import { Route as ReportsUldRouteImport } from './routes/reports.uld'
 import { Route as UnitsIndexRouteImport } from './routes/units.index'
 import { Route as UnitsUnitIdRouteImport } from './routes/units.$unitId'
 
@@ -72,6 +74,16 @@ const UsersRoute = UsersRouteImport.update({
   path: '/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReportsRoute,
+} as any)
+const ReportsUldRoute = ReportsUldRouteImport.update({
+  id: '/uld',
+  path: '/uld',
+  getParentRoute: () => ReportsRoute,
+} as any)
 const UnitsIndexRoute = UnitsIndexRouteImport.update({
   id: '/units/',
   path: '/units/',
@@ -89,12 +101,14 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
-  '/reports': typeof ReportsRoute
+  '/reports': typeof ReportsRouteWithChildren
   '/roles': typeof RolesRoute
   '/send': typeof SendRoute
   '/stations': typeof StationsRoute
   '/users': typeof UsersRoute
+  '/reports/uld': typeof ReportsUldRoute
   '/units/$unitId': typeof UnitsUnitIdRoute
+  '/reports/': typeof ReportsIndexRoute
   '/units/': typeof UnitsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -103,12 +117,13 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
-  '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
   '/send': typeof SendRoute
   '/stations': typeof StationsRoute
   '/users': typeof UsersRoute
+  '/reports/uld': typeof ReportsUldRoute
   '/units/$unitId': typeof UnitsUnitIdRoute
+  '/reports': typeof ReportsIndexRoute
   '/units': typeof UnitsIndexRoute
 }
 export interface FileRoutesById {
@@ -118,12 +133,14 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/positions': typeof PositionsRoute
   '/receive': typeof ReceiveRoute
-  '/reports': typeof ReportsRoute
+  '/reports': typeof ReportsRouteWithChildren
   '/roles': typeof RolesRoute
   '/send': typeof SendRoute
   '/stations': typeof StationsRoute
   '/users': typeof UsersRoute
+  '/reports/uld': typeof ReportsUldRoute
   '/units/$unitId': typeof UnitsUnitIdRoute
+  '/reports/': typeof ReportsIndexRoute
   '/units/': typeof UnitsIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,7 +156,9 @@ export interface FileRouteTypes {
     | '/send'
     | '/stations'
     | '/users'
+    | '/reports/uld'
     | '/units/$unitId'
+    | '/reports/'
     | '/units/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -148,12 +167,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/positions'
     | '/receive'
-    | '/reports'
     | '/roles'
     | '/send'
     | '/stations'
     | '/users'
+    | '/reports/uld'
     | '/units/$unitId'
+    | '/reports'
     | '/units'
   id:
     | '__root__'
@@ -167,7 +187,9 @@ export interface FileRouteTypes {
     | '/send'
     | '/stations'
     | '/users'
+    | '/reports/uld'
     | '/units/$unitId'
+    | '/reports/'
     | '/units/'
   fileRoutesById: FileRoutesById
 }
@@ -177,7 +199,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PositionsRoute: typeof PositionsRoute
   ReceiveRoute: typeof ReceiveRoute
-  ReportsRoute: typeof ReportsRoute
+  ReportsRoute: typeof ReportsRouteWithChildren
   RolesRoute: typeof RolesRoute
   SendRoute: typeof SendRoute
   StationsRoute: typeof StationsRoute
@@ -258,6 +280,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/': {
+      id: '/reports/'
+      path: '/'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof ReportsIndexRouteImport
+      parentRoute: typeof ReportsRoute
+    }
+    '/reports/uld': {
+      id: '/reports/uld'
+      path: '/uld'
+      fullPath: '/reports/uld'
+      preLoaderRoute: typeof ReportsUldRouteImport
+      parentRoute: typeof ReportsRoute
+    }
     '/units/': {
       id: '/units/'
       path: '/units'
@@ -275,13 +311,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ReportsRouteChildren {
+  ReportsUldRoute: typeof ReportsUldRoute
+  ReportsIndexRoute: typeof ReportsIndexRoute
+}
+
+const ReportsRouteChildren: ReportsRouteChildren = {
+  ReportsUldRoute: ReportsUldRoute,
+  ReportsIndexRoute: ReportsIndexRoute,
+}
+
+const ReportsRouteWithChildren =
+  ReportsRoute._addFileChildren(ReportsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
   LoginRoute: LoginRoute,
   PositionsRoute: PositionsRoute,
   ReceiveRoute: ReceiveRoute,
-  ReportsRoute: ReportsRoute,
+  ReportsRoute: ReportsRouteWithChildren,
   RolesRoute: RolesRoute,
   SendRoute: SendRoute,
   StationsRoute: StationsRoute,

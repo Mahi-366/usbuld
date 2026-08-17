@@ -512,6 +512,25 @@ export const currentUser = users[0]!;
 
 export const currentStation = "DAC";
 
+export interface DepartingFlight {
+  id: string;
+  number: string;
+  from: string;
+  to: string;
+  aircraft: string;
+  std: string;
+  date: string;
+}
+
+/** Outbound services from a station on a given day — Create builds ULDs per flight. */
+export const departingFlights: DepartingFlight[] = [
+  { id: "fl-bg201", number: "BG 201", from: "DAC", to: "LHR", aircraft: "B777F", std: "01:40", date: "2026-08-17" },
+  { id: "fl-bg347", number: "BG 347", from: "DAC", to: "DXB", aircraft: "B787-9", std: "08:55", date: "2026-08-17" },
+  { id: "fl-bg601", number: "BG 601", from: "DAC", to: "CGP", aircraft: "B787-9", std: "11:20", date: "2026-08-17" },
+  { id: "fl-bg089", number: "BG 089", from: "DAC", to: "KUL", aircraft: "A330-300", std: "14:05", date: "2026-08-17" },
+  { id: "fl-bg021", number: "BG 021", from: "DAC", to: "SIN", aircraft: "A330-300", std: "22:15", date: "2026-08-17" },
+];
+
 export interface LoadPosition {
   id: string;
   code: string;
@@ -526,13 +545,110 @@ export const loadPositions: LoadPosition[] = [
   { id: "pos-1", code: "11L", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
   { id: "pos-2", code: "11R", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
   { id: "pos-3", code: "12P", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-13", code: "13L", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-14", code: "13R", deck: "Main Deck", compartment: "Forward", aircraft: "B777F", unitTypes: ["PMC"], active: true },
   { id: "pos-4", code: "21P", deck: "Main Deck", compartment: "Mid", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-15", code: "22L", deck: "Main Deck", compartment: "Mid", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-16", code: "22R", deck: "Main Deck", compartment: "Mid", aircraft: "B777F", unitTypes: ["PMC"], active: true },
   { id: "pos-5", code: "31P", deck: "Main Deck", compartment: "Aft", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-17", code: "32L", deck: "Main Deck", compartment: "Aft", aircraft: "B777F", unitTypes: ["PMC"], active: true },
+  { id: "pos-18", code: "32R", deck: "Main Deck", compartment: "Aft", aircraft: "B777F", unitTypes: ["PMC"], active: true },
   { id: "pos-6", code: "41L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
   { id: "pos-7", code: "41R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
   { id: "pos-8", code: "42L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-19", code: "42R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-20", code: "43L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-21", code: "43R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
   { id: "pos-9", code: "51L", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-22", code: "51R", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
+  { id: "pos-23", code: "52L", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE"], active: true },
   { id: "pos-10", code: "52R", deck: "Lower Deck", compartment: "Aft hold", aircraft: "B787-9", unitTypes: ["AKE", "PMC"], active: true },
+  { id: "pos-24", code: "21L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+  { id: "pos-25", code: "21R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+  { id: "pos-26", code: "22L", deck: "Lower Deck", compartment: "Forward hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+  { id: "pos-27", code: "22R", deck: "Lower Deck", compartment: "Forward hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+  { id: "pos-28", code: "31L", deck: "Lower Deck", compartment: "Aft hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
+  { id: "pos-29", code: "31R", deck: "Lower Deck", compartment: "Aft hold", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
   { id: "pos-11", code: "PR", deck: "Lower Deck", compartment: "Bulk", aircraft: "A330-300", unitTypes: ["AKE"], active: false },
   { id: "pos-12", code: "PL", deck: "Lower Deck", compartment: "Bulk", aircraft: "A330-300", unitTypes: ["AKE"], active: true },
 ];
+
+export const aircraftTypes = Array.from(new Set(loadPositions.map((p) => p.aircraft)));
+
+export interface LoadAssignment {
+  flightId: string;
+  positionCode: string;
+  unitNumber: string;
+  unitType: UnitType;
+  condition: Condition;
+}
+
+function pack(flightId: string, positionCode: string, unit: Unit): LoadAssignment {
+  return {
+    flightId,
+    positionCode,
+    unitNumber: unit.number,
+    unitType: unit.type,
+    condition: unit.condition,
+  };
+}
+
+const dacAke = units.filter((u) => u.stationCode === "DAC" && u.type === "AKE");
+const dacPmc = units.filter((u) => u.stationCode === "DAC" && u.type === "PMC");
+
+/** Occupied aircraft seats. Any active position not listed here reports as N. */
+export const loadAssignments: LoadAssignment[] = [
+  pack("fl-bg201", "11L", dacPmc[0]!),
+  pack("fl-bg201", "11R", dacPmc[1]!),
+  pack("fl-bg201", "12P", dacPmc[2]!),
+  pack("fl-bg201", "22L", dacPmc[3]!),
+  pack("fl-bg347", "41L", dacAke[0]!),
+  pack("fl-bg347", "41R", dacAke[1]!),
+  pack("fl-bg347", "42L", dacAke[2]!),
+  pack("fl-bg347", "52R", dacPmc[4]!),
+  pack("fl-bg601", "51L", dacAke[3]!),
+  pack("fl-bg601", "51R", dacAke[4]!),
+  pack("fl-bg021", "PL", dacAke[5]!),
+  pack("fl-bg021", "21L", dacAke[6]!),
+];
+
+export const NIL_ULD = "N";
+
+export interface PositionLoadRow {
+  position: LoadPosition;
+  uld: string;
+  unitType: UnitType | null;
+  condition: Condition | null;
+  occupied: boolean;
+}
+
+export function aircraftSeats(aircraft: string, type: UnitType | "all" = "all") {
+  return loadPositions.filter(
+    (p) =>
+      p.active &&
+      p.aircraft === aircraft &&
+      (type === "all" || p.unitTypes.includes(type)),
+  );
+}
+
+export function aircraftUldReport(
+  flightId: string,
+  type: UnitType | "all" = "all",
+): PositionLoadRow[] {
+  const flight = departingFlights.find((f) => f.id === flightId);
+  if (!flight) return [];
+  const assigned = loadAssignments.filter((a) => a.flightId === flightId);
+  return aircraftSeats(flight.aircraft, type).map((position) => {
+    const hit = assigned.find((a) => a.positionCode === position.code);
+    if (!hit) {
+      return { position, uld: NIL_ULD, unitType: null, condition: null, occupied: false };
+    }
+    return {
+      position,
+      uld: hit.unitNumber,
+      unitType: hit.unitType,
+      condition: hit.condition,
+      occupied: true,
+    };
+  });
+}
